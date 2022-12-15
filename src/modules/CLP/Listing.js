@@ -28,8 +28,8 @@ function Listing() {
     }
   }, [loadMoreContent]);
 
-  const toggleSearch = () => {
-    setEnableSearch(!enableSearch);
+  const toggleSearch = (value) => {
+    setEnableSearch(value);
   };
 
   const handleSearchInput = (e) => {
@@ -40,16 +40,19 @@ function Listing() {
     <>
       <div className="container mx-auto p-5 bg-black text-white">
         <div className="fixed top-0 left-5 right-5 z-10 py-3 bg-black">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center justify-between gap-5">
-              <img width="16px" src={Back} onClick={toggleSearch}/>
-              {data?.title}
+          <div className="flex items-center justify-between ">
+            <div className="flex items-center gap-5 w-full">
+              <img width="16px" src={Back} onClick={()=>toggleSearch(false)} />
+              {enableSearch ? (
+                <input className="text-white mr-5 bg-transparent border-b border-white w-full" type="text" value={searchTerm} placeholder="Search" autoFocus onChange={handleSearchInput} />
+              ) : (
+                data?.title
+              )}
             </div>
-            <div onClick={toggleSearch}>
+            <div onClick={()=>toggleSearch(true)}>
               <img width="16px" src={Search} />
             </div>
           </div>
-          {enableSearch && <input className="text-black p-1 my-1" type="text" value={searchTerm} placeholder="Search" autoFocus onChange={handleSearchInput} />}
         </div>
         <div className="grid grid-cols-3 tablet:grid-cols-4 desktop:grid-cols-6 gap-x-5 gap-y-8 mt-10">
           {movies?.map((movie, i) => (
